@@ -10,18 +10,18 @@ function App() {
         <div className='container'>
             <div className="container__inner">
                 <div className="container__title">
-                <NavLink to={"/main"}><h1 className='container__title-main'>КАЛЬКУЛЯТОР СТОИМОСТИ РЕМОНТА</h1></NavLink>
+                <NavLink to={"/main/calculator/app"}><h1 className='container__title-main'>КАЛЬКУЛЯТОР СТОИМОСТИ РЕМОНТА</h1></NavLink>
                 </div>
                 <Switch>
-                  <Route exact path="/main">
+                  <Route exact path="/main/calculator/app">
                     <div className="App">
                       <Main/>
                     </div>
                   </Route>
-                  <Route exact path="/admin">
+                  <Route exact path="/main/calculator/admin">
                     <AdminPanel/>
                   </Route>
-                  <Route exact path="/login">
+                  <Route exact path="/main/calculator/login">
                     <LogInWindow/>
                   </Route>
                 </Switch>

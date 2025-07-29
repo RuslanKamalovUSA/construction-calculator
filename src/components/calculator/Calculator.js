@@ -35,7 +35,7 @@ const Calculator = () => {
                     </div>
                 </div>                
                 <div className='calculator__button-inner'>
-                    <Button btnName={'Войти как администратор'} switchToRoute={"/login"} onClick={() => {}}></Button>
+                    <Button btnName={'Войти как администратор'} switchToRoute={"/main/calculator/login"} onClick={() => {}}></Button>
                 </div>
             </div>
     );

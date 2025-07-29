@@ -11,10 +11,15 @@ const ResultPanel = (props) => {
     const [priceUAH, setPriceUAH] = useState(0);
     const [priceUSD, setPriceUSD] = useState(0);
 
-    const area = useSelector(state => state.area.totalArea)
-    const prices = useSelector(state => state.prices.prices)
-    const services = useSelector(state => state.services.services)
-    const height = useSelector(state => state.area.height)
+    // const area = useSelector(state => state.area.totalArea)
+    // const prices = useSelector(state => state.prices.prices)
+    // const services = useSelector(state => state.services.services)
+    // const height = useSelector(state => state.area.height)
+
+    const area = useSelector(state => state.calculatorServiceReducer.totalArea)
+    const prices = useSelector(state => state.calculatorServiceReducer.prices)
+    const services = useSelector(state => state.calculatorServiceReducer.customerServices)
+    const height = useSelector(state => state.calculatorServiceReducer.height)
     
     const {getCurrentUAHRate, getCurrentUAHRateProxy, loading, error, cleanError} = CalculatorService();
 
@@ -25,6 +30,7 @@ const ResultPanel = (props) => {
     const onDataLoaded = (data) => {
         const rateData = data
         setRate(rateData);
+        console.log('rate', rateData)
         //const convertedToUsdData = (price / data).toFixed(2)
         //setPriceUSD(convertedToUsdData);
     }
@@ -34,13 +40,8 @@ const ResultPanel = (props) => {
         calculateTotalPrice(area, height, services, prices);
     }, [area, prices, services])
 
-    console.log("AREA", area)
-    console.log("PRICES", prices)
-    console.log("SERVICES", services)
-
     const calculateTotalPrice = (area, height, services, prices) => {
-        console.log(Array.isArray(area))
-        console.log(typeof area)
+     
         const square = area.map(el => (el.value)).reduce((a, b) => a + b, 0)
         
         const tileArea = area.filter(el => el.id === 'bathroom' || el.id === 'restroom' || el.id === 'corridor_2').reduce((a, b) => a + b.value, 0)
@@ -54,15 +55,13 @@ const ResultPanel = (props) => {
             }
         }
 
-        console.log("SQUARE", area, square, tileArea, totalServices)
-
         let res = totalServices.map(el => {
             return formule(height, square, el.count, el.id, tileArea)
         }).reduce((a, b) => a + b, 0)
 
         let priceUAH = Math.round(res)
         let usdPrice = Math.round(priceUAH/rate)
-        console.log("RESULT", res)
+        
         setPriceUAH(priceUAH)
         setPriceUSD(usdPrice)
     }

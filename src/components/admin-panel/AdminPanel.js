@@ -4,34 +4,39 @@ import { useEffect, useState, useRef } from 'react';
 import usePricesUpdateForAdmin from '../services/PricesUpdateForAdmin.js';
 import CalculatorService from '../services/CalculatorService.js';
 import { useDispatch, useSelector } from 'react-redux';
-
+import store from '../../store/index.js';
 const AdminPanel = () => {
 
     const [operations, setOperations] = useState([]);
     const [value, setValue] = useState(0);
     
     const dispatch = useDispatch();
-    const prices = useSelector(state => state.prices)
-    
-    const {getOperations} = CalculatorService();
+    const prices = useSelector(state => state.calculatorServiceReducer.prices)
+    const services = useSelector(state => state.calculatorServiceReducer.baseServicesRooms[0])
+    const state = useSelector(state => console.log(state))
+    const {getOperations, getDataBase} = CalculatorService();
 
     const onRequest = () => {
-        getOperations().then(onLoaded).catch(err => console.log(err))
+        getDataBase().then(onLoaded).catch(err => console.log(err))
     }
 
     const onLoaded = (data) => {
+        console.log(data)
         const res = data.map(el => ({...el, count: Number(el.count) }))
-        setOperations(res)
+        setOperations(services)
+        console.log('1',services, res)
     }
 
     useEffect(() => {
-        onRequest();
+        setOperations(services)
+        //onLoaded(services)
+        //onRequest();
         changePrices()
     }, [])
 
-    useEffect(() => {
-        console.log("Operations", operations)
-    }, [operations])
+    // useEffect(() => {
+    //     console.log("Operations", operations)
+    // }, [operations])
 
     useEffect(() => {
         changePrices()
@@ -39,6 +44,9 @@ const AdminPanel = () => {
 
     const changePrices = () => {
         dispatch({type: "CHANGE_PRICES", payload: operations})
+        store.subscribe(() => {
+            //console.log("DATA by sub", store.getState())
+        })
     }
 
     // const inputRef = useRef([]);
@@ -127,7 +135,7 @@ const AdminPanel = () => {
                         </ul>
                         </div>
                         <div className='admin-window__btn'>
-                            <Button btnName={"Выйти"} btnWidth={"185px"} switchToRoute={'/main'}/>
+                            <Button btnName={"Выйти"} btnWidth={"185px"} switchToRoute={'/main/calculator/app'}/>
                         </div>
                     </div>
                 </div>

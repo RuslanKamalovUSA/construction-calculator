@@ -5,8 +5,7 @@
     flex-direction: column;
     align-items: start;
     width: 1000px;
-    max-width: 1000px;
-    height: auto;
+    height: fit-content;
     
     &__tabs {
         display: flex;
@@ -31,7 +30,7 @@
     &__parametrs-inner {
         width: 100%;
         margin: 0px auto;
-        height: 700px;
+        min-height: 700px;
         box-shadow: 0px 0px 30px 5px rgba(0, 0, 0, 0.5);
         background: linear-gradient(180deg, rgba(167, 167, 172, 0.13) 0%, rgba(29, 29, 53, 0.9) 100%);
     }

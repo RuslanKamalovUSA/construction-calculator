@@ -10,19 +10,25 @@ const TabServices = () => {
     const {getOperations, error, loading, cleanError} = CalculatorService();
 
     const dispatch = useDispatch();
-    const servicesPicked = useSelector(state => state.services)
-
-
+    //const servicesPicked = useSelector(state => state)
+    //const dataFromStorage = useSelector(state => state.servicesFromDataBase.servicesFromDataBase[0])
+    const dataFromStorage = useSelector(state => state.calculatorServiceReducer.baseServicesRooms[0])
+    
     const onRequest = () => {
-        getOperations().then(onLoaded).catch(err => console.log(err))
+        setOperations(dataFromStorage)
+        //getOperations().then(onLoaded).catch(err => console.log(err))
     }
 
     const onLoaded = (data) => {
+        console.log('data', data)
         const arr = data.map(el => ({...el, approved: false}))
         setOperations(arr);
     }
+
     useEffect(() => {
-        onRequest();
+        //setOperations(servicesPicked)
+        setOperations(dataFromStorage)
+        //onRequest();
         updateData()
     }, [])
 
@@ -47,7 +53,7 @@ const TabServices = () => {
         //console.log('FROM STORE', servicesPicked)
         //console.log('========>', store.getState())
         store.subscribe(() => {
-            console.log("DATA by sub", store.getState())
+            //console.log("DATA by sub", store.getState())
           })
     }
     function renderItems(arr) {

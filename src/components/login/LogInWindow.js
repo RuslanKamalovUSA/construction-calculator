@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import "../login/logInWindow.scss";
 import Button from "../button/Button";
-import { NavLink, useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { NavLink, useHistory } from "react-router-dom";
 
 import { Formik } from "formik";
 import CalculatorService from "../services/CalculatorService";
@@ -13,7 +13,7 @@ const LogInWindow = () => {
     
     const [isActive, setIsActive] = useState(false); //стэйт для стиля с красной обводкой и дива с месседжем об ошибке в пароле и имени
 
-    const {getAdminsCredentials, error, loading, cleanError} = CalculatorService();
+    const {getAdminsCredentialsDB, error, loading, cleanError} = CalculatorService();
 
     const history = useHistory();
 
@@ -28,16 +28,22 @@ const LogInWindow = () => {
 
     const onRequest = () => {
          //достаем имя и пароль из db.json
-        getAdminsCredentials().then(onLoaded).catch(err => console.log(err));
+        getAdminsCredentialsDB().then(onLoaded).catch(err => console.log(err));
     }
 
     const onLoaded = (data) => {
-        setAdminCredentials(data)
+        console.log(data.admins[0])
+        const adminsCredentialsDB = data.admins[0]
+        const adm = [];
+        adm[0] = adminsCredentialsDB.login
+        adm[1] = adminsCredentialsDB.password
+        setAdminCredentials(data.admins[0])
+        //console.log(adm)
     }
     
 
     function validateAdmin(name, password){
-        const admin = adminsCredentials[1].admin;
+        const admin = adminsCredentials;
         let res;
         if ((admin.login === name) && (admin.password === password)) {
             res = true;
@@ -97,7 +103,7 @@ const LogInWindow = () => {
                           setSubmitting(false);
                         }, 400);
                         if (validateAdmin(values.name, values.password)) {
-                            history.push('/admin')
+                            history.push('/main/calculator/admin')
                         } else {
                             setIsActive(true);  
                             //установить стиль с обводкой

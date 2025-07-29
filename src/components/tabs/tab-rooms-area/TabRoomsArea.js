@@ -10,23 +10,111 @@ const TabRoomsArea = () => {
     const [heightValue, setHeightValue] = useState(0)
 
     const dispatch = useDispatch();
-    const totalArea = useSelector(state => state)
+    //const roomsFromDataBase = useSelector(state => state.servicesFromDataBase.servicesFromDataBase[1])
+    const roomsFromDataBase = useSelector(state => state.calculatorServiceReducer.baseServicesRooms[1] || [])
+    const mainState = useSelector(state => state)
 
     const {getRoomsArea, error, loading, cleanError} = CalculatorService();
 
     const onRequest = () => {
-        getRoomsArea().then(onDataLoaded).catch(error => console.log(error))
+      console.log("roomsFromDataBase", roomsFromDataBase)
+      setRoomsArea(roomsFromDataBase)
+        //getRoomsArea().then(onDataLoaded).catch(error => console.log(error))
     }
+
     const onDataLoaded = (data) => {
         setRoomsArea(data);
     }   
 
+    const loadDatatoDataBase = () => {
+        const arr = [
+            {
+              "name": "Гостинная",
+              "value": 0,
+              "id": "living_room"
+            },
+            {
+              "name": "Гостинная кухней(студия)",
+              "value": 0,
+              "id": "living_room"
+            },
+            {
+              "name": "Коридор №1",
+              "value": 0,
+              "id": "corridor_2"
+            },
+            {
+              "name": "Коридор №2",
+              "value": 0,
+              "id": "corridor_2"
+            },
+            {
+              "name": "Кухня",
+              "value": 0,
+              "id": "kitchen"
+            },
+            {
+              "name": "Спальня №1",
+              "value": 0,
+              "id": "bedroom"
+            },
+            {
+              "name": "Спальня №2",
+              "value": 0,
+              "id": "bedroom"
+            },
+            {
+              "name": "Детская №1",
+              "value": 0,
+              "id": "kids_bedroom"
+            },
+            {
+              "name": "Детская №2",
+              "value": 0,
+              "id": "kids_bedroom"
+            },
+            {
+              "name": "Санузел (ванная или душ)",
+              "value": 0,
+              "id": "bathroom"
+            },
+            {
+              "name": "Санузел (туалет)",
+              "value": 0,
+              "id": "restroom"
+            },
+            {
+              "name": "Лоджия",
+              "value": 0,
+              "id": "balcony-lodgiya"
+            },
+            {
+              "name": "Кладовая",
+              "value": 0,
+              "id": "storage"
+            },
+            {
+              "name": "Балкон №1",
+              "value": 0,
+              "id": "balcony"
+            },
+            {
+              "name": "Балкон №2",
+              "value": 0,
+              "id": "balcony"
+            }
+            ]
+        fetch("http://localhost:5000/getData")    
+    }
+    
     useEffect(() => {
         onRequest()   
         updateData()
+        //loadDatatoDataBase()
     }, [])
 
     useEffect(() => {
+        console.log("MainState", mainState)
         updateData()
         updateHeight(heightValue)
     }, [roomsArea, heightValue])
@@ -49,7 +137,7 @@ const TabRoomsArea = () => {
         } else {
             setHeightValue(e.target.value)
         }
-    }
+    }  
 
     // const inputRefs = useRef([]);
 
@@ -65,7 +153,10 @@ const TabRoomsArea = () => {
         let roomArea = roomsArea.map(el => el.value).reduce((a, b) => a + b, 0)
         let name = [roomsArea[index].name]
         dispatch({type: "ADD_AREA", payload: {[name] : e.target.value}}) 
-        console.log(totalArea)
+        // 
+        //     
+        // 
+        //   console.log(totalArea)
     }
 
     // const handleBlur = (e, index) => {
@@ -73,6 +164,7 @@ const TabRoomsArea = () => {
     // }
 
     function renderItems(arr){
+      console.log(arr)
         const items = arr.map((typeOfRoom, index) => {
             return (
                     <li className='calculator__list-item'>
