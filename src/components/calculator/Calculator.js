@@ -5,7 +5,7 @@ import TabServices from '../tabs/tab-services/TabServices';
 import Button from '../button/Button';
 
 import '../calculator/calculator.scss'
-import { Link } from 'react-router-dom/cjs/react-router-dom.min';
+//import { Link } from 'react-router-dom/cjs/react-router-dom';
 
 
 const Calculator = () => {
