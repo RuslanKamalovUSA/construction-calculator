@@ -7,7 +7,7 @@ import store from '../src/store/index.js';
 
 
 store.subscribe(() => {
-  //console.log("DATA by sub", store.getState())
+  console.log("DATA by sub", store.getState())
 })
 
 

@@ -19,7 +19,7 @@ const TabRoomsArea = () => {
     const onRequest = () => {
       console.log("roomsFromDataBase", roomsFromDataBase)
       setRoomsArea(roomsFromDataBase)
-        //getRoomsArea().then(onDataLoaded).catch(error => console.log(error))
+        getRoomsArea().then(onDataLoaded).catch(error => console.log(error))
     }
 
     const onDataLoaded = (data) => {
