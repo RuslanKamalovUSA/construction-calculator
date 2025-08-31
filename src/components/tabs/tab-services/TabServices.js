@@ -12,7 +12,7 @@ const TabServices = () => {
     const dispatch = useDispatch();
     //const servicesPicked = useSelector(state => state)
     //const dataFromStorage = useSelector(state => state.servicesFromDataBase.servicesFromDataBase[0])
-    const dataFromStorage = useSelector(state => state.calculatorServiceReducer.baseServicesRooms)
+    const dataFromStorage = useSelector(state => state.calculatorServiceReducer.baseServicesRooms[0])
     
     const onRequest = () => {
         setOperations(dataFromStorage)

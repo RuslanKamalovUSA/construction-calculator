@@ -5,7 +5,7 @@ const CalculatorService = () => {
     const {loading, request,  error, cleanError} = useHttp();
 
     const _baseApi = "https://open.er-api.com/v6/latest/USD"; // https://www.exchangerate-api.com/docs/free
-    const _proxiApi = "http://localhost:3003/api/rates";
+    const _proxiApi = "http://localhost:5000/api/rates";
     const _operations = "http://localhost:3001/operations";
     const _squares = "http://localhost:3001/squares";
     const _admins = "http://localhost:3001/admins";
